@@ -1,0 +1,197 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      8288,        188]
+NotebookOptionsPosition[      6626,        161]
+NotebookOutlinePosition[      6940,        175]
+CellTagsIndexPosition[      6897,        172]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["Numerical check of the five-point monodromy relations", "Title",ExpressionUUID->"8b61296e-5ec8-421f-9b6a-de622ea8a1a7"],
+
+Cell["\<\
+All 25 monodromy relations produced by monodromyRelations5pt.nb are checked \
+numerically at a single kinematic point, by evaluating the 100 Z-integrals \
+they contain and substituting.
+
+Nothing outside Mathematica is needed: no NCAlgebra, no PolyLogTools, no HPL, \
+no ginsh.  zNumerics.m is plain Wolfram Language -- every multiple \
+polylogarithm appearing at weight 2 has an elementary closed form, which is \
+what makes the 10^4-10^6 integrand samples per integral affordable.\
+\>", "Text",ExpressionUUID->"d3306bf7-dd9c-47e0-8ba9-8c872b333017"],
+
+Cell["Load", "Section",ExpressionUUID->"72a1e537-16fb-4833-bfb1-59bc0acc8c16"],
+
+Cell["\<\
+nbDir = NotebookDirectory[];
+Get[FileNameJoin[{nbDir, \"zNumerics.m\"}]];
+monData = Get[FileNameJoin[{nbDir, \"monEqs5_W2.m\"}]];
+
+zList = Union@Cases[monData[\"equations\"][[All, 2]], _Zc, Infinity];
+
+Column[{
+  Row[{\"weight truncation  : \", monData[\"Wmax\"]}],
+  Row[{\"Parke-Taylor order : \", monData[\"rho\"]}],
+  Row[{\"relations          : \", Length[monData[\"equations\"]]}],
+  Row[{\"distinct Z's       : \", Length[zList]}],
+  Row[{\"packages loaded    : \",
+       If[Names[\"NCAlgebra`*\"] === {} && Names[\"PolyLogTools`*\"] === {},
+          \"none - stock kernel\", \"NCAlgebra / PolyLogTools present\"]}]}]\
+\>", "Input",ExpressionUUID->"24d18584-3812-46b1-8059-2918f13b85dc"],
+
+Cell["The kinematic point", "Section",ExpressionUUID->"a0a99152-7817-4ea9-b62d-1712b96e5a29"],
+
+Cell["\<\
+The relation mixes the four chambers 12345, 13245, 13425 and 21345, so the \
+Mandelstam point must sit inside the domain of convergence of all four at \
+once.  Reading the facet exponents off the puncture collisions and demanding \
+every one exceed -1 gives
+
+    s12, s23, s34, s45, s15 > 0        and        s13, s24, s25 > -1.
+
+This is a real constraint, not a formality.  The single-chamber point {1/5, \
+3/10, 3/10, 6/5, 6/5} used earlier satisfies the first group but has s25 = \
+-11/5, and the two chambers it misses come back as 10^7 and 10^33.  The point \
+below clears all eight conditions; the appendix reads the facet exponents off \
+the integrand rather than taking that on trust.\
+\>", "Text",ExpressionUUID->"4f0ab308-4f2c-4a21-83a3-d20fec5b80c2"],
+
+Cell["\<\
+(* {s12, s23, s34, s45, s15} *)
+sMon = {1/5, 3/10, 2/5, 3/5, 7/20};
+
+Grid[Prepend[
+  Join[Transpose[{sBasis5, sMon}],
+       {#, toBasis5[#] /. sChoice[sMon]} & /@ {s[1, 3], s[2, 4], s[2, 5], \
+s[1, 4], s[3, 5]}],
+  {\"invariant\", \"value\"}], Frame -> All, Alignment -> Left]\
+\>", "Input",ExpressionUUID->"63e4c93e-1304-43e4-99c4-e8cfcf85cc28"],
+
+Cell["The 100 Z-integrals", "Section",ExpressionUUID->"89060241-57e1-4c32-a1a1-a1e43361b551"],
+
+Cell["\<\
+(* a few minutes: 100 integrals, each split into 5 sector-decomposed pieces \
+*)
+{tZ, zVals} = AbsoluteTiming[
+   Association[(# -> ZNum[Sequence @@ (List @@ #), sMon][\"value\"]) & /@ \
+zList]];
+
+maxZ = Max[Abs[N[Values[zVals]]]];
+
+Column[{
+  Row[{\"evaluated \", Length[zVals], \" integrals in \", Round[tZ, 0.1], \" \
+s\"}],
+  Row[{\"failures : \", Count[Values[zVals], $Failed]}],
+  Row[{\"max |Z|  : \", maxZ}],
+  Grid[Prepend[{First[#], NumberForm[N[Last[#]], 12]} & /@ Normal[zVals],
+       {\"Z\", \"value\"}], Frame -> All, Alignment -> Left]}]\
+\>", "Input",ExpressionUUID->"41da04e1-b82b-4838-83ad-bc554d9bedb6"],
+
+Cell["The 25 residuals", "Section",ExpressionUUID->"d98bd46d-75d3-4ed3-b4d0-d4b29fedd26a"],
+
+Cell["\<\
+Each relation is a linear combination of Z-integrals with coefficients in the \
+Mandelstam invariants; numS puts the coefficients on the independent basis \
+and substitutes the point, so a relation that holds returns zero.  What is \
+left is quadrature error.\
+\>", "Text",ExpressionUUID->"c8cdeb6e-c0e5-4963-af6e-04888e641673"],
+
+Cell["\<\
+resid = Table[numS[monData[\"equations\"][[k, 2]] /. zVals, sMon],
+              {k, Length[monData[\"equations\"]]}];
+
+Grid[Prepend[
+  SortBy[Table[{monData[\"equations\"][[k, 1]], Abs[resid[[k]]], \
+Abs[resid[[k]]]/maxZ},
+               {k, Length[resid]}], -#[[2]] &],
+  {\"basis word\", \"|residual|\", \"relative\"}], Frame -> All, Alignment -> \
+Left]\
+\>", "Input",ExpressionUUID->"e024a02f-d63f-4dec-8a74-513034aff5f8"],
+
+Cell["\<\
+Column[{
+  Row[{\"relations checked      : \", Length[resid]}],
+  Row[{\"worst |residual|       : \", Max[Abs[resid]]}],
+  Row[{\"best  |residual|       : \", Min[Abs[resid]]}],
+  Row[{\"worst relative to |Z|  : \", Max[Abs[resid]]/maxZ}]}]\
+\>", "Input",ExpressionUUID->"221dee61-828a-4fb8-8b1c-402d0935d3d5"],
+
+Cell["Appendix: where the kinematic point comes from", "Section",ExpressionUUID->"12612486-ed3c-4dd4-b457-b1a2fc24197b"],
+
+Cell["\<\
+The convergence conditions above are not asserted -- they can be read \
+straight off the integrand.  convExponents sector-decomposes the integrand of \
+a chamber symbolically and takes the limit at each facet, returning the \
+exponent the integrand vanishes (or blows up) with there.  Convergence is \
+exactly the statement that every one of them exceeds -1.
+
+This cell takes a few minutes: Simplify and Limit on the full symbolic \
+integrand, four times over.  It is a check, not a prerequisite -- everything \
+above runs without it.\
+\>", "Text",ExpressionUUID->"6d087c5f-170a-4767-843e-3c255c6d0550"],
+
+Cell["\<\
+(* Read the facet exponents off the sector-decomposed integrand rather than
+   asserting them.  Every exponent must exceed -1 for the integral to converge.
+   Around 30 s per chamber: Simplify and Limit on the full symbolic \
+integrand. *)
+facets = Association[(# -> convExponents[#, {1, 2, 3, 4, 5}]) & /@ \
+monChambers];
+
+expsAt[ch_] := toBasis5[Flatten[Values /@ Values[facets[ch]]]] /. \
+sChoice[sMon];
+
+Grid[Prepend[
+  {StringJoin[ToString /@ #], Min[expsAt[#]], TrueQ[Min[expsAt[#]] > -1]} & \
+/@ monChambers,
+  {\"chamber\", \"worst facet exponent\", \"converges\"}], Frame -> All, \
+Alignment -> Left]\
+\>", "Input",ExpressionUUID->"20615375-94ac-4166-86ab-7a8f70058165"]
+},
+FrontEndVersion->"15.0 for Linux x86 (64-bit) (July 2, 2026)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"a4c5e561-0b77-403d-b23f-545acf70d799"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 125, 0, 70, "Title",ExpressionUUID->"8b61296e-5ec8-421f-9b6a-de622ea8a1a7"],
+Cell[682, 22, 560, 9, 70, "Text",ExpressionUUID->"d3306bf7-dd9c-47e0-8ba9-8c872b333017"],
+Cell[1245, 33, 78, 0, 70, "Section",ExpressionUUID->"72a1e537-16fb-4833-bfb1-59bc0acc8c16"],
+Cell[1326, 35, 706, 15, 70, "Input",ExpressionUUID->"24d18584-3812-46b1-8059-2918f13b85dc"],
+Cell[2035, 52, 93, 0, 70, "Section",ExpressionUUID->"a0a99152-7817-4ea9-b62d-1712b96e5a29"],
+Cell[2131, 54, 771, 13, 70, "Text",ExpressionUUID->"4f0ab308-4f2c-4a21-83a3-d20fec5b80c2"],
+Cell[2905, 69, 357, 9, 70, "Input",ExpressionUUID->"63e4c93e-1304-43e4-99c4-e8cfcf85cc28"],
+Cell[3265, 80, 93, 0, 70, "Section",ExpressionUUID->"89060241-57e1-4c32-a1a1-a1e43361b551"],
+Cell[3361, 82, 633, 16, 70, "Input",ExpressionUUID->"41da04e1-b82b-4838-83ad-bc554d9bedb6"],
+Cell[3997, 100, 90, 0, 70, "Section",ExpressionUUID->"d98bd46d-75d3-4ed3-b4d0-d4b29fedd26a"],
+Cell[4090, 102, 338, 5, 70, "Text",ExpressionUUID->"c8cdeb6e-c0e5-4963-af6e-04888e641673"],
+Cell[4431, 109, 437, 10, 70, "Input",ExpressionUUID->"e024a02f-d63f-4dec-8a74-513034aff5f8"],
+Cell[4871, 121, 320, 6, 70, "Input",ExpressionUUID->"221dee61-828a-4fb8-8b1c-402d0935d3d5"],
+Cell[5194, 129, 120, 0, 70, "Section",ExpressionUUID->"12612486-ed3c-4dd4-b457-b1a2fc24197b"],
+Cell[5317, 131, 613, 10, 70, "Text",ExpressionUUID->"6d087c5f-170a-4767-843e-3c255c6d0550"],
+Cell[5933, 143, 689, 16, 70, "Input",ExpressionUUID->"20615375-94ac-4166-86ab-7a8f70058165"]
+}
+]
+*)
+
+(* End of internal cache information *)

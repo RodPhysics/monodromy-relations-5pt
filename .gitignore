@@ -1,0 +1,15 @@
+# Wolfram
+*.nb.bak
+Mathematica-*.log
+wolfram-kernel-debug.log
+
+# LaTeX build artifacts
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+
+# OS
+.DS_Store

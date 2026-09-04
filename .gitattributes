@@ -1,0 +1,6 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Notebooks and packages carry their own encoding; leave them byte-for-byte
+*.nb -text
+*.m  text eol=lf

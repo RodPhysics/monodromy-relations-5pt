@@ -98,11 +98,3 @@ pure powers. `ZNum` therefore integrates five pieces per Z.
 s12, s23, s34, s45, s15 > 0        and        s13, s24, s25 > -1.
 ```
 
-A point chosen for one chamber generally fails this. `{1/5, 3/10, 3/10, 6/5, 6/5}`
-satisfies the first group but has `s25 = -11/5`, and the two chambers it misses return
-`1e7` and `1e33`. `convExponents` in `zNumerics.m` reads the facet exponents off the
-sector-decomposed integrand, so the domain is checked rather than assumed. At the point
-used here the worst facet exponent in the four chambers is `-4/5`, `-7/10`, `-13/20` and
-`-4/5` — all comfortably above `-1`. The appendix of `numericalChecks5pt.nb` computes
-them; it takes a few minutes and nothing else depends on it.
-

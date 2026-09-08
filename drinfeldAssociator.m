@@ -4,9 +4,6 @@
    drinfeldAssociator.m -- the Drinfeld associator as a truncated series in two
    non-commuting letters.
 
-   Lifted verbatim from UsefulNCFunctions.m of the working repository; only the
-   four definitions that monodromyRelations5pt.nb actually uses are kept.
-
    Requires NCAlgebra for the non-commutative products, PolyLogTools for G and
    HPL for HPL, all three of which the notebook loads before this file.
 

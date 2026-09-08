@@ -29,22 +29,6 @@
    form.  Measured: 9.8 ms -> 7.8 us per integrand call (~1250x).
    --------------------------------------------------------------------------- *)
 
-(* ===========================================================================
-   0.  Kinematics, labels and the integrand
-
-   The scalar unknowns are
-
-       Zc[tau, rho, u, v] = Integrate[ KN_tau PT_rho G(u; z_tau[[2]]) G(v; z_tau[[3]]),
-                                       {0 = z_tau[[1]} < z_tau[[2]] < z_tau[[3]] < z_tau[[4]] = 1} ]
-
-   with tau the chamber (boundary ordering of the punctures), rho the
-   Parke-Taylor ordering, and u, v the MPL words of the two integrated
-   variables.  Zc and ss are inert heads: they carry the data of
-   monEqs5_W2.m and are never evaluated.  ss[i,j] is the Mandelstam
-   invariant as written by the generator; s[i,j] is the same thing in the
-   convention used here, and numS bridges the two.
-   =========================================================================== *)
-
 ClearAll[Zc, ss, s, sBasis5, momCons5, toBasis5, gaugeX, Gins, chAlph, genIntegrand,
          sChoice, integrandAtSChoice];
 
@@ -154,9 +138,7 @@ GtoNum[expr_] := expr //. HoldPattern[G[args__]] :> GN[Most[{args}], Last[{args}
 
    GN was checked against PolyLogTools` Ginsh over all weight <= 2 words of
    both chamber alphabets, at 6 seeded random rational points of the domain:
-   the maximum discrepancy was exactly 0 in both variables.  The routine that
-   did it is the only thing here that ever needed ginsh, so it is not shipped
-   -- that is what makes this file dependency-free.
+   the maximum discrepancy was exactly 0 in both variables.
    =========================================================================== *)
 
 (* ===========================================================================
@@ -171,7 +153,7 @@ GtoNum[expr_] := expr //. HoldPattern[G[args__]] :> GN[Most[{args}], Last[{args}
    30 disagreed in the 4th digit).  Splitting a < b from b < a via a = b t and
    b = a t makes each sector a product of pure powers.
 
-   The Simplify under the domain assumptions is load-bearing, not cosmetic: it is
+   The Simplify under the domain assumptions is
    what combines b^(s23-1) b^s24 b^(s34-1) b into a single power.  Without it
    NIntegrate evaluates Infinity*0*Infinity*0 on the edge and returns
    Indeterminate.
@@ -295,9 +277,12 @@ ZNum[t0_, r0_, w10_, w20_, sVals_List, OptionsPattern[]] :=
 (* ===========================================================================
    4.  Convergence conditions per chamber
 
-   Verified for chambers 12345, 13245 and 13425 (the symbolic run agreed with
-   reading the exponents off the collision structure in every case); 21345 was
-   filled in analytically by the same rule.
+   Computed symbolically for all four chambers.  For 12345, 13245 and 13425 the
+   run agreed with reading the exponents off the collision structure; 21345,
+   previously filled in analytically by the same rule, now agrees too and adds
+   no constraint the other three do not already imply.  Two self-checks pass
+   everywhere: the sector boundary tt->1 gives exponent 0, and the two corner
+   limits bb->0 and aa->0 agree within each chamber.
 
    sNum5 = {1/5, 3/10, 3/10, 6/5, 6/5} was chosen to make the 13245 chamber
    converge, and it does.  But the monodromy equations mix four chambers, and at
@@ -313,7 +298,7 @@ ZNum[t0_, r0_, w10_, w20_, sVals_List, OptionsPattern[]] :=
 
        s12, s23, s34, s45, s15 > 0     and     s13, s24, s25 > -1
 
-   and sNum5 fails the second group (s25 = -11/5).  At sMon = {1/5, 3/10, 2/5,
+   and sNum5 fails the second group (s25 = -11/10).  At sMon = {1/5, 3/10, 2/5,
    3/5, 7/20} all four converge and monodromy equation 1 closes to
    |residual| = 1.8*10^-10 against max|Z| = 34, i.e. 5*10^-12 relative.
    =========================================================================== *)

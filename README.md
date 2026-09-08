@@ -106,6 +106,3 @@ used here the worst facet exponent in the four chambers is `-4/5`, `-7/10`, `-13
 `-4/5` — all comfortably above `-1`. The appendix of `numericalChecks5pt.nb` computes
 them; it takes a few minutes and nothing else depends on it.
 
-## License
-
-MIT — see `LICENSE`.

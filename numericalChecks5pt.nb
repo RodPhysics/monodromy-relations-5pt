@@ -10,14 +10,16 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[      8288,        188]
-NotebookOptionsPosition[      6626,        161]
-NotebookOutlinePosition[      6940,        175]
-CellTagsIndexPosition[      6897,        172]
+NotebookDataLength[     70562,       2043]
+NotebookOptionsPosition[     68388,       1995]
+NotebookOutlinePosition[     68777,       2011]
+CellTagsIndexPosition[     68734,       2008]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+
+Cell[CellGroupData[{
 Cell["Numerical check of the five-point monodromy relations", "Title",ExpressionUUID->"8b61296e-5ec8-421f-9b6a-de622ea8a1a7"],
 
 Cell["\<\
@@ -27,28 +29,119 @@ they contain and substituting.
 
 Nothing outside Mathematica is needed: no NCAlgebra, no PolyLogTools, no HPL, \
 no ginsh.  zNumerics.m is plain Wolfram Language -- every multiple \
-polylogarithm appearing at weight 2 has an elementary closed form, which is \
-what makes the 10^4-10^6 integrand samples per integral affordable.\
-\>", "Text",ExpressionUUID->"d3306bf7-dd9c-47e0-8ba9-8c872b333017"],
+polylogarithm appearing at weight 2 has an elementary closed form.\
+\>", "Text",
+ CellChangeTimes->{{3.99787937991572*^9, 
+  3.997879381402336*^9}},ExpressionUUID->"d3306bf7-dd9c-47e0-8ba9-\
+8c872b333017"],
+
+Cell[CellGroupData[{
 
 Cell["Load", "Section",ExpressionUUID->"72a1e537-16fb-4833-bfb1-59bc0acc8c16"],
 
-Cell["\<\
-nbDir = NotebookDirectory[];
-Get[FileNameJoin[{nbDir, \"zNumerics.m\"}]];
-monData = Get[FileNameJoin[{nbDir, \"monEqs5_W2.m\"}]];
+Cell[CellGroupData[{
 
-zList = Union@Cases[monData[\"equations\"][[All, 2]], _Zc, Infinity];
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"nbDir", " ", "=", " ", 
+   RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"Get", "[", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{"nbDir", ",", " ", "\"\<zNumerics.m\>\""}], "}"}], "]"}], "]"}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"monData", " ", "=", " ", 
+    RowBox[{"Get", "[", 
+     RowBox[{"FileNameJoin", "[", 
+      RowBox[{"{", 
+       RowBox[{"nbDir", ",", " ", "\"\<monEqs5_W2.m\>\""}], "}"}], "]"}], 
+     "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"zList", " ", "=", " ", 
+    RowBox[{"Union", "@", 
+     RowBox[{"Cases", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"monData", "[", "\"\<equations\>\"", "]"}], "[", 
+        RowBox[{"[", 
+         RowBox[{"All", ",", " ", "2"}], "]"}], "]"}], ",", " ", "_Zc", ",", 
+       " ", "Infinity"}], "]"}]}]}], ";"}], "\n"}], "\n", 
+ RowBox[{"Column", "[", 
+  RowBox[{"{", "\n", "  ", 
+   RowBox[{
+    RowBox[{"Row", "[", 
+     RowBox[{"{", 
+      RowBox[{"\"\<weight truncation  : \>\"", ",", " ", 
+       RowBox[{"monData", "[", "\"\<Wmax\>\"", "]"}]}], "}"}], "]"}], ",", 
+    "\n", "  ", 
+    RowBox[{"Row", "[", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Parke-Taylor order : \>\"", ",", " ", 
+       RowBox[{"monData", "[", "\"\<rho\>\"", "]"}]}], "}"}], "]"}], ",", 
+    "\n", "  ", 
+    RowBox[{"Row", "[", 
+     RowBox[{"{", 
+      RowBox[{"\"\<relations          : \>\"", ",", " ", 
+       RowBox[{"Length", "[", 
+        RowBox[{"monData", "[", "\"\<equations\>\"", "]"}], "]"}]}], "}"}], 
+     "]"}], ",", "\n", "  ", 
+    RowBox[{"Row", "[", 
+     RowBox[{"{", 
+      RowBox[{"\"\<distinct Z's       : \>\"", ",", " ", 
+       RowBox[{"Length", "[", "zList", "]"}]}], "}"}], "]"}], ",", "\n", "  ", 
+    RowBox[{"Row", "[", 
+     RowBox[{"{", 
+      RowBox[{"\"\<packages loaded    : \>\"", ",", "\n", "       ", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{
+           RowBox[{"Names", "[", "\"\<NCAlgebra`*\>\"", "]"}], " ", "===", 
+           " ", 
+           RowBox[{"{", "}"}]}], " ", "&&", " ", 
+          RowBox[{
+           RowBox[{"Names", "[", "\"\<PolyLogTools`*\>\"", "]"}], " ", "===", 
+           " ", 
+           RowBox[{"{", "}"}]}]}], ",", "\n", 
+         "          ", "\"\<none - stock kernel\>\"", ",", 
+         " ", "\"\<NCAlgebra / PolyLogTools present\>\""}], "]"}]}], "}"}], 
+     "]"}]}], "}"}], "]"}]}], "Input",
+ CellLabel->"In[1]:=",ExpressionUUID->"24d18584-3812-46b1-8059-2918f13b85dc"],
 
-Column[{
-  Row[{\"weight truncation  : \", monData[\"Wmax\"]}],
-  Row[{\"Parke-Taylor order : \", monData[\"rho\"]}],
-  Row[{\"relations          : \", Length[monData[\"equations\"]]}],
-  Row[{\"distinct Z's       : \", Length[zList]}],
-  Row[{\"packages loaded    : \",
-       If[Names[\"NCAlgebra`*\"] === {} && Names[\"PolyLogTools`*\"] === {},
-          \"none - stock kernel\", \"NCAlgebra / PolyLogTools present\"]}]}]\
-\>", "Input",ExpressionUUID->"24d18584-3812-46b1-8059-2918f13b85dc"],
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{"\"weight truncation  : \"", "2"},
+      "RowDefault"]},
+    {
+     TemplateBox[{"\"Parke-Taylor order : \"", 
+       RowBox[{"{", 
+         RowBox[{"1", ",", "2", ",", "3", ",", "4", ",", "5"}], "}"}]},
+      "RowDefault"]},
+    {
+     TemplateBox[{"\"relations          : \"", "25"},
+      "RowDefault"]},
+    {
+     TemplateBox[{"\"distinct Z's       : \"", "100"},
+      "RowDefault"]},
+    {
+     TemplateBox[{"\"packages loaded    : \"", "\"none - stock kernel\""},
+      "RowDefault"]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output",
+ CellChangeTimes->{3.997879929536118*^9},
+ CellLabel->"Out[5]=",ExpressionUUID->"78a4dfb8-df2d-4d95-9fa9-7b22cd5515a5"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
 
 Cell["The kinematic point", "Section",ExpressionUUID->"a0a99152-7817-4ea9-b62d-1712b96e5a29"],
 
@@ -60,43 +153,1646 @@ every one exceed -1 gives
 
     s12, s23, s34, s45, s15 > 0        and        s13, s24, s25 > -1.
 
-This is a real constraint, not a formality.  The single-chamber point {1/5, \
-3/10, 3/10, 6/5, 6/5} used earlier satisfies the first group but has s25 = \
--11/5, and the two chambers it misses come back as 10^7 and 10^33.  The point \
-below clears all eight conditions; the appendix reads the facet exponents off \
-the integrand rather than taking that on trust.\
-\>", "Text",ExpressionUUID->"4f0ab308-4f2c-4a21-83a3-d20fec5b80c2"],
+The point below clears all eight conditions\
+\>", "Text",
+ CellChangeTimes->{{3.997879454835381*^9, 
+  3.9978794656491547`*^9}},ExpressionUUID->"4f0ab308-4f2c-4a21-83a3-\
+d20fec5b80c2"],
 
-Cell["\<\
-(* {s12, s23, s34, s45, s15} *)
-sMon = {1/5, 3/10, 2/5, 3/5, 7/20};
+Cell[CellGroupData[{
 
-Grid[Prepend[
-  Join[Transpose[{sBasis5, sMon}],
-       {#, toBasis5[#] /. sChoice[sMon]} & /@ {s[1, 3], s[2, 4], s[2, 5], \
-s[1, 4], s[3, 5]}],
-  {\"invariant\", \"value\"}], Frame -> All, Alignment -> Left]\
-\>", "Input",ExpressionUUID->"63e4c93e-1304-43e4-99c4-e8cfcf85cc28"],
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"{", 
+    RowBox[{
+    "s12", ",", " ", "s23", ",", " ", "s34", ",", " ", "s45", ",", " ", 
+     "s15"}], "}"}], " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"sMon", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"1", "/", "5"}], ",", " ", 
+       RowBox[{"3", "/", "10"}], ",", " ", 
+       RowBox[{"2", "/", "5"}], ",", " ", 
+       RowBox[{"3", "/", "5"}], ",", " ", 
+       RowBox[{"7", "/", "20"}]}], "}"}]}], ";"}], "\n", "\n", 
+   RowBox[{"Grid", "[", 
+    RowBox[{
+     RowBox[{"Prepend", "[", "\n", "  ", 
+      RowBox[{
+       RowBox[{"Join", "[", 
+        RowBox[{
+         RowBox[{"Transpose", "[", 
+          RowBox[{"{", 
+           RowBox[{"sBasis5", ",", " ", "sMon"}], "}"}], "]"}], ",", "\n", 
+         "       ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"#", ",", " ", 
+             RowBox[{
+              RowBox[{"toBasis5", "[", "#", "]"}], " ", "/.", " ", 
+              RowBox[{"sChoice", "[", "sMon", "]"}]}]}], "}"}], " ", "&"}], 
+          " ", "/@", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"s", "[", 
+             RowBox[{"1", ",", " ", "3"}], "]"}], ",", " ", 
+            RowBox[{"s", "[", 
+             RowBox[{"2", ",", " ", "4"}], "]"}], ",", " ", 
+            RowBox[{"s", "[", 
+             RowBox[{"2", ",", " ", "5"}], "]"}], ",", " ", 
+            RowBox[{"s", "[", 
+             RowBox[{"1", ",", " ", "4"}], "]"}], ",", " ", 
+            RowBox[{"s", "[", 
+             RowBox[{"3", ",", " ", "5"}], "]"}]}], "}"}]}]}], "]"}], ",", 
+       "\n", "  ", 
+       RowBox[{"{", 
+        RowBox[{"\"\<invariant\>\"", ",", " ", "\"\<value\>\""}], "}"}]}], 
+      "]"}], ",", " ", 
+     RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+     RowBox[{"Alignment", " ", "->", " ", "Left"}]}], "]"}]}]}]], "Input",
+ CellLabel->"In[6]:=",ExpressionUUID->"63e4c93e-1304-43e4-99c4-e8cfcf85cc28"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\<\"invariant\"\>", "\<\"value\"\>"},
+    {
+     RowBox[{"s", "[", 
+      RowBox[{"1", ",", "2"}], "]"}], 
+     FractionBox["1", "5"]},
+    {
+     RowBox[{"s", "[", 
+      RowBox[{"2", ",", "3"}], "]"}], 
+     FractionBox["3", "10"]},
+    {
+     RowBox[{"s", "[", 
+      RowBox[{"3", ",", "4"}], "]"}], 
+     FractionBox["2", "5"]},
+    {
+     RowBox[{"s", "[", 
+      RowBox[{"4", ",", "5"}], "]"}], 
+     FractionBox["3", "5"]},
+    {
+     RowBox[{"s", "[", 
+      RowBox[{"1", ",", "5"}], "]"}], 
+     FractionBox["7", "20"]},
+    {
+     RowBox[{"s", "[", 
+      RowBox[{"1", ",", "3"}], "]"}], 
+     FractionBox["1", "10"]},
+    {
+     RowBox[{"s", "[", 
+      RowBox[{"2", ",", "4"}], "]"}], 
+     RowBox[{"-", 
+      FractionBox["7", "20"]}]},
+    {
+     RowBox[{"s", "[", 
+      RowBox[{"2", ",", "5"}], "]"}], 
+     RowBox[{"-", 
+      FractionBox["3", "20"]}]},
+    {
+     RowBox[{"s", "[", 
+      RowBox[{"1", ",", "4"}], "]"}], 
+     RowBox[{"-", 
+      FractionBox["13", "20"]}]},
+    {
+     RowBox[{"s", "[", 
+      RowBox[{"3", ",", "5"}], "]"}], 
+     RowBox[{"-", 
+      FractionBox["4", "5"]}]}
+   },
+   AutoDelete->False,
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxFrame->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{3.997879936420762*^9},
+ CellLabel->"Out[7]=",ExpressionUUID->"d9ca3d1f-82ee-40d9-874b-4bbf4acbf141"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
 
 Cell["The 100 Z-integrals", "Section",ExpressionUUID->"89060241-57e1-4c32-a1a1-a1e43361b551"],
 
-Cell["\<\
-(* a few minutes: 100 integrals, each split into 5 sector-decomposed pieces \
-*)
-{tZ, zVals} = AbsoluteTiming[
-   Association[(# -> ZNum[Sequence @@ (List @@ #), sMon][\"value\"]) & /@ \
-zList]];
+Cell[CellGroupData[{
 
-maxZ = Max[Abs[N[Values[zVals]]]];
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"a", " ", "few", " ", 
+     RowBox[{"minutes", ":", " ", 
+      RowBox[{"100", " ", "integrals"}]}]}], ",", " ", 
+    RowBox[{
+     RowBox[{"each", " ", "split", " ", "into", " ", "5", " ", "sector"}], "-", 
+     RowBox[{"decomposed", " ", "pieces"}]}]}], " ", "*)"}], "\n", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"tZ", ",", " ", "zVals"}], "}"}], " ", "=", " ", 
+     RowBox[{"AbsoluteTiming", "[", "\n", "   ", 
+      RowBox[{"Association", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"#", " ", "->", " ", 
+           RowBox[{
+            RowBox[{"ZNum", "[", 
+             RowBox[{
+              RowBox[{"Sequence", " ", "@@", " ", 
+               RowBox[{"(", 
+                RowBox[{"List", " ", "@@", " ", "#"}], ")"}]}], ",", " ", 
+              "sMon"}], "]"}], "[", "\"\<value\>\"", "]"}]}], ")"}], " ", 
+         "&"}], " ", "/@", " ", "zList"}], "]"}], "]"}]}], ";"}], "\n", "\n", 
+   
+   RowBox[{
+    RowBox[{"maxZ", " ", "=", " ", 
+     RowBox[{"Max", "[", 
+      RowBox[{"Abs", "[", 
+       RowBox[{"N", "[", 
+        RowBox[{"Values", "[", "zVals", "]"}], "]"}], "]"}], "]"}]}], ";"}], 
+   "\n", "\n", 
+   RowBox[{"Column", "[", 
+    RowBox[{"{", "\n", "  ", 
+     RowBox[{
+      RowBox[{"Row", "[", 
+       RowBox[{"{", 
+        RowBox[{"\"\<evaluated \>\"", ",", " ", 
+         RowBox[{"Length", "[", "zVals", "]"}], ",", 
+         " ", "\"\< integrals in \>\"", ",", " ", 
+         RowBox[{"Round", "[", 
+          RowBox[{"tZ", ",", " ", "0.1"}], "]"}], ",", " ", "\"\< s\>\""}], 
+        "}"}], "]"}], ",", "\n", "  ", 
+      RowBox[{"Row", "[", 
+       RowBox[{"{", 
+        RowBox[{"\"\<failures : \>\"", ",", " ", 
+         RowBox[{"Count", "[", 
+          RowBox[{
+           RowBox[{"Values", "[", "zVals", "]"}], ",", " ", "$Failed"}], 
+          "]"}]}], "}"}], "]"}], ",", "\n", "  ", 
+      RowBox[{"Row", "[", 
+       RowBox[{"{", 
+        RowBox[{"\"\<max |Z|  : \>\"", ",", " ", "maxZ"}], "}"}], "]"}], ",", 
+      "\n", "  ", 
+      RowBox[{"Grid", "[", 
+       RowBox[{
+        RowBox[{"Prepend", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"First", "[", "#", "]"}], ",", " ", 
+              RowBox[{"NumberForm", "[", 
+               RowBox[{
+                RowBox[{"N", "[", 
+                 RowBox[{"Last", "[", "#", "]"}], "]"}], ",", " ", "12"}], 
+               "]"}]}], "}"}], " ", "&"}], " ", "/@", " ", 
+           RowBox[{"Normal", "[", "zVals", "]"}]}], ",", "\n", "       ", 
+          RowBox[{"{", 
+           RowBox[{"\"\<Z\>\"", ",", " ", "\"\<value\>\""}], "}"}]}], "]"}], ",",
+         " ", 
+        RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+        RowBox[{"Alignment", " ", "->", " ", "Left"}]}], "]"}]}], "}"}], 
+    "]"}]}]}]], "Input",
+ CellLabel->"In[8]:=",ExpressionUUID->"41da04e1-b82b-4838-83ad-bc554d9bedb6"],
 
-Column[{
-  Row[{\"evaluated \", Length[zVals], \" integrals in \", Round[tZ, 0.1], \" \
-s\"}],
-  Row[{\"failures : \", Count[Values[zVals], $Failed]}],
-  Row[{\"max |Z|  : \", maxZ}],
-  Grid[Prepend[{First[#], NumberForm[N[Last[#]], 12]} & /@ Normal[zVals],
-       {\"Z\", \"value\"}], Frame -> All, Alignment -> Left]}]\
-\>", "Input",ExpressionUUID->"41da04e1-b82b-4838-83ad-bc554d9bedb6"],
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TemplateBox[{
+      "\"evaluated \"", "100", "\" integrals in \"", "241.5`", "\" s\""},
+      "RowDefault"]},
+    {
+     TemplateBox[{"\"failures : \"", "0"},
+      "RowDefault"]},
+    {
+     TemplateBox[{"\"max |Z|  : \"", "535.0939677263176`"},
+      "RowDefault"]},
+    {
+     TagBox[GridBox[{
+        {"\<\"Z\"\>", "\<\"value\"\>"},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"33.9585356278\"\>",
+            ShowStringCharacters->False],
+           33.95853562782776,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"1\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-25.6530420916\"\>",
+            ShowStringCharacters->False],
+           -25.653042091622247`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"11\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"37.7610867196\"\>",
+            ShowStringCharacters->False],
+           37.761086719590644`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"14\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-33.5069685126\"\>",
+            ShowStringCharacters->False],
+           -33.506968512600615`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"4\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-94.4398027697\"\>",
+            ShowStringCharacters->False],
+           -94.43980276973136,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"41\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"41.4267619567\"\>",
+            ShowStringCharacters->False],
+           41.42676195673953,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"44\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"297.51779121\"\>",
+            ShowStringCharacters->False],
+           297.51779121009724`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"1\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-111.780995149\"\>",
+            ShowStringCharacters->False],
+           -111.78099514893378`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"1\"", "\",\"", 
+           "\"1\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"157.771440734\"\>",
+            ShowStringCharacters->False],
+           157.77144073350428`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"1\"", "\",\"", 
+           "\"4\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"180.118463299\"\>",
+            ShowStringCharacters->False],
+           180.11846329930012`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"11\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"535.093967726\"\>",
+            ShowStringCharacters->False],
+           535.0939677263176,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"13\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-26.5827034505\"\>",
+            ShowStringCharacters->False],
+           -26.58270345052193,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"14\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-18.5386086518\"\>",
+            ShowStringCharacters->False],
+           -18.538608651830238`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"3\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-89.6336161452\"\>",
+            ShowStringCharacters->False],
+           -89.63361614523747,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"3\"", "\",\"", 
+           "\"1\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"41.9065488693\"\>",
+            ShowStringCharacters->False],
+           41.90654886930302,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"3\"", "\",\"", 
+           "\"4\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"406.503898285\"\>",
+            ShowStringCharacters->False],
+           406.50389828507844`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"31\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"74.1313511011\"\>",
+            ShowStringCharacters->False],
+           74.13135110114023,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"33\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"358.848202601\"\>",
+            ShowStringCharacters->False],
+           358.8482026010435,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"34\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"212.215161187\"\>",
+            ShowStringCharacters->False],
+           212.2151611869964,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"4\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-45.3232132666\"\>",
+            ShowStringCharacters->False],
+           -45.32321326660059,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"4\"", "\",\"", 
+           "\"1\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"3.31344179674\"\>",
+            ShowStringCharacters->False],
+           3.313441796735969,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"4\"", "\",\"", 
+           "\"4\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"303.583890278\"\>",
+            ShowStringCharacters->False],
+           303.5838902781427,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"41\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"25.1344902248\"\>",
+            ShowStringCharacters->False],
+           25.13449022481056,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"43\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"129.760195125\"\>",
+            ShowStringCharacters->False],
+           129.76019512545756`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"12345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"44\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"121.203756659\"\>",
+            ShowStringCharacters->False],
+           121.2037566585884,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-15.1937943549\"\>",
+            ShowStringCharacters->False],
+           -15.193794354887803`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"1\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"10.845542348\"\>",
+            ShowStringCharacters->False],
+           10.845542348003391`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"11\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-15.7266620439\"\>",
+            ShowStringCharacters->False],
+           -15.726662043884922`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"14\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"15.3215460157\"\>",
+            ShowStringCharacters->False],
+           15.32154601567975,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"4\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"42.502529388\"\>",
+            ShowStringCharacters->False],
+           42.50252938803608,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"41\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-18.8316670326\"\>",
+            ShowStringCharacters->False],
+           -18.831667032620725`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"44\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-128.597850811\"\>",
+            ShowStringCharacters->False],
+           -128.59785081123766`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"1\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"13.9886508481\"\>",
+            ShowStringCharacters->False],
+           13.988650848079837`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"1\"", "\",\"", 
+           "\"1\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-35.0895698765\"\>",
+            ShowStringCharacters->False],
+           -35.08956987645283,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"1\"", "\",\"", 
+           "\"4\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-7.71920362281\"\>",
+            ShowStringCharacters->False],
+           -7.7192036228116425`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"11\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-21.4653148342\"\>",
+            ShowStringCharacters->False],
+           -21.46531483420945,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"12\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"20.3128153612\"\>",
+            ShowStringCharacters->False],
+           20.312815361227997`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"14\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"13.4702559906\"\>",
+            ShowStringCharacters->False],
+           13.470255990601448`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"2\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"76.3518715553\"\>",
+            ShowStringCharacters->False],
+           76.35187155531024,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"2\"", "\",\"", 
+           "\"1\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-38.7024526173\"\>",
+            ShowStringCharacters->False],
+           -38.702452617302825`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"2\"", "\",\"", 
+           "\"4\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-311.687697628\"\>",
+            ShowStringCharacters->False],
+           -311.68769762785473`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"21\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-61.3490558022\"\>",
+            ShowStringCharacters->False],
+           -61.349055802205925`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"22\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-328.383687576\"\>",
+            ShowStringCharacters->False],
+           -328.3836875757053,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"24\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-183.425790347\"\>",
+            ShowStringCharacters->False],
+           -183.4257903472546,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"4\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"34.2440306529\"\>",
+            ShowStringCharacters->False],
+           34.2440306528601,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"4\"", "\",\"", 
+           "\"1\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-2.7441896839\"\>",
+            ShowStringCharacters->False],
+           -2.744189683897278,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"4\"", "\",\"", 
+           "\"4\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-212.432174097\"\>",
+            ShowStringCharacters->False],
+           -212.43217409721873`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"41\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-17.3224587853\"\>",
+            ShowStringCharacters->False],
+           -17.32245878528031,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"42\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-102.559868976\"\>",
+            ShowStringCharacters->False],
+           -102.55986897633758`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13245\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"44\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-94.5558050105\"\>",
+            ShowStringCharacters->False],
+           -94.55580501047388,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-10.4991890344\"\>",
+            ShowStringCharacters->False],
+           -10.499189034397414`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"1\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"4.54256975344\"\>",
+            ShowStringCharacters->False],
+           4.5425697534428275`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"11\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-4.35125575643\"\>",
+            ShowStringCharacters->False],
+           -4.3512557564291585`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"12\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"11.9279811056\"\>",
+            ShowStringCharacters->False],
+           11.927981105578931`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"2\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"34.3381320132\"\>",
+            ShowStringCharacters->False],
+           34.338132013199086`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"21\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-14.2322869997\"\>",
+            ShowStringCharacters->False],
+           -14.232286999720865`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"22\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-107.13804735\"\>",
+            ShowStringCharacters->False],
+           -107.13804734981368`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"1\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"6.94312432551\"\>",
+            ShowStringCharacters->False],
+           6.9431243255104,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"1\"", "\",\"", 
+           "\"1\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-10.5397298023\"\>",
+            ShowStringCharacters->False],
+           -10.539729802314682`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"1\"", "\",\"", 
+           "\"2\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-6.22961167146\"\>",
+            ShowStringCharacters->False],
+           -6.229611671456553,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"11\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-7.79664657795\"\>",
+            ShowStringCharacters->False],
+           -7.796646577952031,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"12\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"10.2470059285\"\>",
+            ShowStringCharacters->False],
+           10.247005928527273`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"14\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"13.7109608091\"\>",
+            ShowStringCharacters->False],
+           13.71096080911231,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"2\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"26.47144017\"\>",
+            ShowStringCharacters->False],
+           26.471440170032917`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"2\"", "\",\"", 
+           "\"1\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-1.69033237234\"\>",
+            ShowStringCharacters->False],
+           -1.6903323723436072`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"2\"", "\",\"", 
+           "\"2\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-170.598889529\"\>",
+            ShowStringCharacters->False],
+           -170.598889529216,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"21\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-12.9301427152\"\>",
+            ShowStringCharacters->False],
+           -12.930142715156457`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"22\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-74.0443134098\"\>",
+            ShowStringCharacters->False],
+           -74.04431340978392,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"24\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-79.3249454995\"\>",
+            ShowStringCharacters->False],
+           -79.32494549953164,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"4\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"46.8430345039\"\>",
+            ShowStringCharacters->False],
+           46.84303450385343,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"4\"", "\",\"", 
+           "\"1\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-12.7305000436\"\>",
+            ShowStringCharacters->False],
+           -12.73050004360709,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"4\"", "\",\"", 
+           "\"2\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-226.682165924\"\>",
+            ShowStringCharacters->False],
+           -226.68216592367983`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"41\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-28.2100771417\"\>",
+            ShowStringCharacters->False],
+           -28.210077141733436`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"42\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-122.802357992\"\>",
+            ShowStringCharacters->False],
+           -122.80235799221198`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"13425\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"44\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-176.921686708\"\>",
+            ShowStringCharacters->False],
+           -176.92168670763826`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-18.1181864988\"\>",
+            ShowStringCharacters->False],
+           -18.118186498845116`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"2\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"15.8781769966\"\>",
+            ShowStringCharacters->False],
+           15.878176996590863`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"22\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-23.6350959221\"\>",
+            ShowStringCharacters->False],
+           -23.635095922064437`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"24\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"16.2652903452\"\>",
+            ShowStringCharacters->False],
+           16.265290345221768`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"4\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"39.5212487782\"\>",
+            ShowStringCharacters->False],
+           39.521248778165976`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"42\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-20.937732231\"\>",
+            ShowStringCharacters->False],
+           -20.93773223102559,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"\"", "\",\"", 
+           "\"44\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-99.3360563095\"\>",
+            ShowStringCharacters->False],
+           -99.33605630948722,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"2\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"99.3354767591\"\>",
+            ShowStringCharacters->False],
+           99.33547675910035,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"2\"", "\",\"", 
+           "\"2\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-126.855341303\"\>",
+            ShowStringCharacters->False],
+           -126.85534130299474`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"2\"", "\",\"", 
+           "\"4\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-171.664800296\"\>",
+            ShowStringCharacters->False],
+           -171.66480029631694`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"22\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-516.758242503\"\>",
+            ShowStringCharacters->False],
+           -516.7582425031621,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"23\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"4.86632241331\"\>",
+            ShowStringCharacters->False],
+           4.86632241331346,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"24\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"3.31245678669\"\>",
+            ShowStringCharacters->False],
+           3.3124567866862753`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"3\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"7.5919529766\"\>",
+            ShowStringCharacters->False],
+           7.591952976602674,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"3\"", "\",\"", 
+           "\"2\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-4.42065589366\"\>",
+            ShowStringCharacters->False],
+           -4.420655893655094,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"3\"", "\",\"", 
+           "\"4\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-23.4797604471\"\>",
+            ShowStringCharacters->False],
+           -23.479760447051724`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"32\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-12.6565103564\"\>",
+            ShowStringCharacters->False],
+           -12.656510356420545`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"33\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-8.10403614142\"\>",
+            ShowStringCharacters->False],
+           -8.104036141421398,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"34\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-5.82813732018\"\>",
+            ShowStringCharacters->False],
+           -5.8281373201805335`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"4\"", "\",\"", 
+           "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"4.85529274864\"\>",
+            ShowStringCharacters->False],
+           4.855292748638497,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"4\"", "\",\"", 
+           "\"2\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-0.703411378437\"\>",
+            ShowStringCharacters->False],
+           -0.7034113784372711,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"4\"", "\",\"", 
+           "\"4\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-20.7171359613\"\>",
+            ShowStringCharacters->False],
+           -20.717135961322818`,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"42\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-6.07756823225\"\>",
+            ShowStringCharacters->False],
+           -6.077568232246268,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"43\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-4.95142235184\"\>",
+            ShowStringCharacters->False],
+           -4.951422351840334,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]},
+        {
+         TemplateBox[{
+           
+           TemplateBox[{"\"Z\"", "\"21345\""}, "Superscript", SyntaxForm -> 
+            SuperscriptBox], "\"[\"", "\"12345\"", "\"|\"", "\"44\"", "\",\"",
+            "\"\"", "\"]\""},
+          "RowDefault"], 
+         TagBox[
+          InterpretationBox[
+           StyleBox["\<\"-4.43965175682\"\>",
+            ShowStringCharacters->False],
+           -4.439651756820656,
+           AutoDelete->True],
+          NumberForm[#, 12]& ]}
+       },
+       AutoDelete->False,
+       GridBoxAlignment->{"Columns" -> {{Left}}},
+       GridBoxFrame->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+       GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+      "Grid"]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output",
+ CellChangeTimes->{3.9978801852115602`*^9},
+ CellLabel->"Out[10]=",ExpressionUUID->"caca997a-135b-428c-b637-2c732688720a"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
 
 Cell["The 25 residuals", "Section",ExpressionUUID->"d98bd46d-75d3-4ed3-b4d0-d4b29fedd26a"],
 
@@ -107,58 +1803,198 @@ and substitutes the point, so a relation that holds returns zero.  What is \
 left is quadrature error.\
 \>", "Text",ExpressionUUID->"c8cdeb6e-c0e5-4963-af6e-04888e641673"],
 
-Cell["\<\
-resid = Table[numS[monData[\"equations\"][[k, 2]] /. zVals, sMon],
-              {k, Length[monData[\"equations\"]]}];
+Cell[CellGroupData[{
 
-Grid[Prepend[
-  SortBy[Table[{monData[\"equations\"][[k, 1]], Abs[resid[[k]]], \
-Abs[resid[[k]]]/maxZ},
-               {k, Length[resid]}], -#[[2]] &],
-  {\"basis word\", \"|residual|\", \"relative\"}], Frame -> All, Alignment -> \
-Left]\
-\>", "Input",ExpressionUUID->"e024a02f-d63f-4dec-8a74-513034aff5f8"],
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"resid", " ", "=", " ", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"numS", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"monData", "[", "\"\<equations\>\"", "]"}], "[", 
+          RowBox[{"[", 
+           RowBox[{"k", ",", " ", "2"}], "]"}], "]"}], " ", "/.", " ", 
+         "zVals"}], ",", " ", "sMon"}], "]"}], ",", "\n", "              ", 
+      RowBox[{"{", 
+       RowBox[{"k", ",", " ", 
+        RowBox[{"Length", "[", 
+         RowBox[{"monData", "[", "\"\<equations\>\"", "]"}], "]"}]}], "}"}]}],
+      "]"}]}], ";"}], "\n"}], "\n", 
+ RowBox[{"Grid", "[", 
+  RowBox[{
+   RowBox[{"Prepend", "[", "\n", "  ", 
+    RowBox[{
+     RowBox[{"SortBy", "[", 
+      RowBox[{
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"monData", "[", "\"\<equations\>\"", "]"}], "[", 
+            RowBox[{"[", 
+             RowBox[{"k", ",", " ", "1"}], "]"}], "]"}], ",", " ", 
+           RowBox[{"Abs", "[", 
+            RowBox[{"resid", "[", 
+             RowBox[{"[", "k", "]"}], "]"}], "]"}], ",", " ", 
+           RowBox[{
+            RowBox[{"Abs", "[", 
+             RowBox[{"resid", "[", 
+              RowBox[{"[", "k", "]"}], "]"}], "]"}], "/", "maxZ"}]}], "}"}], ",",
+          "\n", "               ", 
+         RowBox[{"{", 
+          RowBox[{"k", ",", " ", 
+           RowBox[{"Length", "[", "resid", "]"}]}], "}"}]}], "]"}], ",", " ", 
+       
+       RowBox[{
+        RowBox[{"-", 
+         RowBox[{"#", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], " ", "&"}]}], "]"}], ",", "\n", 
+     "  ", 
+     RowBox[{"{", 
+      RowBox[{"\"\<basis word\>\"", ",", " ", "\"\<|residual|\>\"", ",", 
+       " ", "\"\<relative\>\""}], "}"}]}], "]"}], ",", " ", 
+   RowBox[{"Frame", " ", "->", " ", "All"}], ",", " ", 
+   RowBox[{"Alignment", " ", "->", " ", "Left"}]}], "]"}]}], "Input",
+ CellLabel->"In[12]:=",ExpressionUUID->"e024a02f-d63f-4dec-8a74-513034aff5f8"],
 
-Cell["\<\
-Column[{
-  Row[{\"relations checked      : \", Length[resid]}],
-  Row[{\"worst |residual|       : \", Max[Abs[resid]]}],
-  Row[{\"best  |residual|       : \", Min[Abs[resid]]}],
-  Row[{\"worst relative to |Z|  : \", Max[Abs[resid]]/maxZ}]}]\
-\>", "Input",ExpressionUUID->"221dee61-828a-4fb8-8b1c-402d0935d3d5"],
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\<\"basis word\"\>", "\<\"|residual|\"\>", "\<\"relative\"\>"},
+    {
+     RowBox[{
+      RowBox[{"x", "[", "2", "]"}], "**", 
+      RowBox[{"x", "[", "3", "]"}]}], "2.965729667527871`*^-8", 
+     "5.542446460627531`*^-11"},
+    {
+     SuperscriptBox[
+      RowBox[{"x", "[", "3", "]"}], "2"], "1.5152870064466687`*^-8", 
+     "2.83181477990738`*^-11"},
+    {
+     SuperscriptBox[
+      RowBox[{"y", "[", "2", "]"}], "2"], "1.420493713664736`*^-8", 
+     "2.654662170273746`*^-11"},
+    {
+     RowBox[{
+      RowBox[{"x", "[", "1", "]"}], "**", 
+      RowBox[{"y", "[", "2", "]"}]}], "1.4026400686422923`*^-8", 
+     "2.621296731492393`*^-11"},
+    {
+     RowBox[{
+      RowBox[{"x", "[", "3", "]"}], "**", 
+      RowBox[{"y", "[", "1", "]"}]}], "6.535153009311116`*^-9", 
+     "1.221309415443387`*^-11"},
+    {
+     RowBox[{
+      RowBox[{"x", "[", "2", "]"}], "**", 
+      RowBox[{"y", "[", "2", "]"}]}], "5.51312497127664`*^-9", 
+     "1.0303096846153229`*^-11"},
+    {
+     RowBox[{
+      RowBox[{"x", "[", "3", "]"}], "**", 
+      RowBox[{"y", "[", "2", "]"}]}], "4.973691268219939`*^-9", 
+     "9.294986615815885`*^-12"},
+    {
+     SuperscriptBox[
+      RowBox[{"y", "[", "1", "]"}], "2"], "3.933129221848976`*^-9", 
+     "7.350352384949026`*^-12"},
+    {
+     RowBox[{
+      RowBox[{"x", "[", "1", "]"}], "**", 
+      RowBox[{"y", "[", "1", "]"}]}], "3.587041261902281`*^-9", 
+     "6.703572602666549`*^-12"},
+    {
+     RowBox[{
+      RowBox[{"x", "[", "2", "]"}], "**", 
+      RowBox[{"x", "[", "1", "]"}]}], "2.5832967249693494`*^-9", 
+     "4.827744061376932`*^-12"},
+    {
+     RowBox[{
+      RowBox[{"x", "[", "2", "]"}], "**", 
+      RowBox[{"y", "[", "1", "]"}]}], "2.3853264607375205`*^-9", 
+     "4.4577711665729975`*^-12"},
+    {
+     RowBox[{
+      RowBox[{"x", "[", "3", "]"}], "**", 
+      RowBox[{"x", "[", "2", "]"}]}], "1.8490996673769697`*^-9", 
+     "3.4556541073225506`*^-12"},
+    {
+     RowBox[{"y", "[", "1", "]"}], "1.5594224650209613`*^-9", 
+     "2.914296477022804`*^-12"},
+    {
+     SuperscriptBox[
+      RowBox[{"x", "[", "1", "]"}], "2"], "1.5284728517626713`*^-9", 
+     "2.8564568915948485`*^-12"},
+    {
+     SuperscriptBox[
+      RowBox[{"x", "[", "2", "]"}], "2"], "1.4986949619021367`*^-9", 
+     "2.80080705874948`*^-12"},
+    {
+     RowBox[{
+      RowBox[{"x", "[", "3", "]"}], "**", 
+      RowBox[{"x", "[", "1", "]"}]}], "1.3825035286075675`*^-9", 
+     "2.5836649485734272`*^-12"},
+    {
+     RowBox[{"x", "[", "3", "]"}], "1.2486217058369`*^-9", 
+     "2.3334624965825213`*^-12"},
+    {
+     RowBox[{"x", "[", "2", "]"}], "1.1075806749205506`*^-9", 
+     "2.069880697079808`*^-12"},
+    {
+     RowBox[{
+      RowBox[{"x", "[", "1", "]"}], "**", 
+      RowBox[{"x", "[", "2", "]"}]}], "1.0502672674787408`*^-9", 
+     "1.9627716454017606`*^-12"},
+    {
+     RowBox[{"y", "[", "2", "]"}], "8.10655033917723`*^-10", 
+     "1.514976962574068`*^-12"},
+    {
+     RowBox[{
+      RowBox[{"y", "[", "2", "]"}], "**", 
+      RowBox[{"y", "[", "1", "]"}]}], "7.922052499357058`*^-10", 
+     "1.4804974410417795`*^-12"},
+    {
+     RowBox[{
+      RowBox[{"y", "[", "1", "]"}], "**", 
+      RowBox[{"y", "[", "2", "]"}]}], "6.784517868807788`*^-10", 
+     "1.2679114843391095`*^-12"},
+    {
+     RowBox[{
+      RowBox[{"x", "[", "1", "]"}], "**", 
+      RowBox[{"x", "[", "3", "]"}]}], "4.955213729215421`*^-10", 
+     "9.260455224847246`*^-13"},
+    {
+     RowBox[{"x", "[", "1", "]"}], "3.9937489361717366`*^-10", 
+     "7.463640364218054`*^-13"},
+    {"1", "1.8078808728288682`*^-10", "3.3786231612940515`*^-13"}
+   },
+   AutoDelete->False,
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxFrame->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{3.9978805624585133`*^9},
+ CellLabel->"Out[13]=",ExpressionUUID->"a600c152-c884-4797-b38a-e3cd2527b2f3"]
+}, Open  ]],
 
-Cell["Appendix: where the kinematic point comes from", "Section",ExpressionUUID->"12612486-ed3c-4dd4-b457-b1a2fc24197b"],
-
-Cell["\<\
-The convergence conditions above are not asserted -- they can be read \
-straight off the integrand.  convExponents sector-decomposes the integrand of \
-a chamber symbolically and takes the limit at each facet, returning the \
-exponent the integrand vanishes (or blows up) with there.  Convergence is \
-exactly the statement that every one of them exceeds -1.
-
-This cell takes a few minutes: Simplify and Limit on the full symbolic \
-integrand, four times over.  It is a check, not a prerequisite -- everything \
-above runs without it.\
-\>", "Text",ExpressionUUID->"6d087c5f-170a-4767-843e-3c255c6d0550"],
-
-Cell["\<\
-(* Read the facet exponents off the sector-decomposed integrand rather than
-   asserting them.  Every exponent must exceed -1 for the integral to converge.
-   Around 30 s per chamber: Simplify and Limit on the full symbolic \
-integrand. *)
-facets = Association[(# -> convExponents[#, {1, 2, 3, 4, 5}]) & /@ \
-monChambers];
-
-expsAt[ch_] := toBasis5[Flatten[Values /@ Values[facets[ch]]]] /. \
-sChoice[sMon];
-
-Grid[Prepend[
-  {StringJoin[ToString /@ #], Min[expsAt[#]], TrueQ[Min[expsAt[#]] > -1]} & \
-/@ monChambers,
-  {\"chamber\", \"worst facet exponent\", \"converges\"}], Frame -> All, \
-Alignment -> Left]\
-\>", "Input",ExpressionUUID->"20615375-94ac-4166-86ab-7a8f70058165"]
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+  "All", " ", "relations", " ", "give", " ", "zero", " ", "within", " ", 
+   "numerical", " ", 
+   RowBox[{"precision", "!"}]}], "*)"}]], "Input",
+ CellChangeTimes->{{3.9978806849890127`*^9, 
+  3.997880704031527*^9}},ExpressionUUID->"4a7288dd-e224-463e-b116-\
+469500b5f799"]
+}, Open  ]]
+}, Open  ]]
 },
+WindowSize->{469.5, 501},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"15.0 for Linux x86 (64-bit) (July 2, 2026)",
 StyleDefinitions->"Default.nb",
 ExpressionUUID->"a4c5e561-0b77-403d-b23f-545acf70d799"
@@ -174,24 +2010,42 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 125, 0, 70, "Title",ExpressionUUID->"8b61296e-5ec8-421f-9b6a-de622ea8a1a7"],
-Cell[682, 22, 560, 9, 70, "Text",ExpressionUUID->"d3306bf7-dd9c-47e0-8ba9-8c872b333017"],
-Cell[1245, 33, 78, 0, 70, "Section",ExpressionUUID->"72a1e537-16fb-4833-bfb1-59bc0acc8c16"],
-Cell[1326, 35, 706, 15, 70, "Input",ExpressionUUID->"24d18584-3812-46b1-8059-2918f13b85dc"],
-Cell[2035, 52, 93, 0, 70, "Section",ExpressionUUID->"a0a99152-7817-4ea9-b62d-1712b96e5a29"],
-Cell[2131, 54, 771, 13, 70, "Text",ExpressionUUID->"4f0ab308-4f2c-4a21-83a3-d20fec5b80c2"],
-Cell[2905, 69, 357, 9, 70, "Input",ExpressionUUID->"63e4c93e-1304-43e4-99c4-e8cfcf85cc28"],
-Cell[3265, 80, 93, 0, 70, "Section",ExpressionUUID->"89060241-57e1-4c32-a1a1-a1e43361b551"],
-Cell[3361, 82, 633, 16, 70, "Input",ExpressionUUID->"41da04e1-b82b-4838-83ad-bc554d9bedb6"],
-Cell[3997, 100, 90, 0, 70, "Section",ExpressionUUID->"d98bd46d-75d3-4ed3-b4d0-d4b29fedd26a"],
-Cell[4090, 102, 338, 5, 70, "Text",ExpressionUUID->"c8cdeb6e-c0e5-4963-af6e-04888e641673"],
-Cell[4431, 109, 437, 10, 70, "Input",ExpressionUUID->"e024a02f-d63f-4dec-8a74-513034aff5f8"],
-Cell[4871, 121, 320, 6, 70, "Input",ExpressionUUID->"221dee61-828a-4fb8-8b1c-402d0935d3d5"],
-Cell[5194, 129, 120, 0, 70, "Section",ExpressionUUID->"12612486-ed3c-4dd4-b457-b1a2fc24197b"],
-Cell[5317, 131, 613, 10, 70, "Text",ExpressionUUID->"6d087c5f-170a-4767-843e-3c255c6d0550"],
-Cell[5933, 143, 689, 16, 70, "Input",ExpressionUUID->"20615375-94ac-4166-86ab-7a8f70058165"]
+Cell[CellGroupData[{
+Cell[576, 22, 125, 0, 217, "Title",ExpressionUUID->"8b61296e-5ec8-421f-9b6a-de622ea8a1a7"],
+Cell[704, 24, 551, 11, 208, "Text",ExpressionUUID->"d3306bf7-dd9c-47e0-8ba9-8c872b333017"],
+Cell[CellGroupData[{
+Cell[1280, 39, 78, 0, 65, "Section",ExpressionUUID->"72a1e537-16fb-4833-bfb1-59bc0acc8c16"],
+Cell[CellGroupData[{
+Cell[1383, 43, 2546, 69, 757, "Input",ExpressionUUID->"24d18584-3812-46b1-8059-2918f13b85dc"],
+Cell[3932, 114, 851, 25, 101, "Output",ExpressionUUID->"78a4dfb8-df2d-4d95-9fa9-7b22cd5515a5"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4832, 145, 93, 0, 65, "Section",ExpressionUUID->"a0a99152-7817-4ea9-b62d-1712b96e5a29"],
+Cell[4928, 147, 525, 12, 208, "Text",ExpressionUUID->"4f0ab308-4f2c-4a21-83a3-d20fec5b80c2"],
+Cell[CellGroupData[{
+Cell[5478, 163, 1980, 53, 275, "Input",ExpressionUUID->"63e4c93e-1304-43e4-99c4-e8cfcf85cc28"],
+Cell[7461, 218, 1503, 54, 311, "Output",ExpressionUUID->"d9ca3d1f-82ee-40d9-874b-4bbf4acbf141"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9013, 278, 93, 0, 65, "Section",ExpressionUUID->"89060241-57e1-4c32-a1a1-a1e43361b551"],
+Cell[CellGroupData[{
+Cell[9131, 282, 3009, 80, 761, "Input",ExpressionUUID->"41da04e1-b82b-4838-83ad-bc554d9bedb6"],
+Cell[12143, 364, 49401, 1426, 2225, "Output",ExpressionUUID->"caca997a-135b-428c-b637-2c732688720a"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[61593, 1796, 90, 0, 65, "Section",ExpressionUUID->"d98bd46d-75d3-4ed3-b4d0-d4b29fedd26a"],
+Cell[61686, 1798, 338, 5, 121, "Text",ExpressionUUID->"c8cdeb6e-c0e5-4963-af6e-04888e641673"],
+Cell[CellGroupData[{
+Cell[62049, 1807, 2030, 55, 424, "Input",ExpressionUUID->"e024a02f-d63f-4dec-8a74-513034aff5f8"],
+Cell[64082, 1864, 3948, 116, 570, "Output",ExpressionUUID->"a600c152-c884-4797-b38a-e3cd2527b2f3"]
+}, Open  ]],
+Cell[68045, 1983, 315, 8, 49, "Input",ExpressionUUID->"4a7288dd-e224-463e-b116-469500b5f799"]
+}, Open  ]]
+}, Open  ]]
 }
 ]
 *)
 
-(* End of internal cache information *)
